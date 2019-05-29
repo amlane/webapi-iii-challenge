@@ -5,7 +5,7 @@ const router = express.Router();
 const userDb = require('./userDb.js');
 const postDb = require('../posts/postDb.js');
 
-router.post('/', (req, res) => {
+router.post('/', validateUser, (req, res) => {
     const user = req.body;
 
     userDb.insert(user).then( newUser => {
@@ -15,14 +15,14 @@ router.post('/', (req, res) => {
     })
 });
 
-router.post('/:id/posts',  (req, res) => {
+router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
     let post = req.body;
     const id = req.params.id;
     post.user_id = id;
 
-    if(!post.text){
-        res.status(400).json({ message: "Posts cannot be blank." })
-    }
+    // if(!post.text){
+    //     res.status(400).json({ message: "Posts cannot be blank." })
+    // }
 
     postDb.insert(post).then( post => {
         res.status(201).json(post)
@@ -81,13 +81,13 @@ router.delete('/:id', validateUserId, (req, res) => {
     })
 });
 
-router.put('/:id', validateUserId, (req, res) => {
+router.put('/:id', validateUserId, validateUser, (req, res) => {
     const id = req.params.id;
     const changes = req.body;
     const { name } = req.body;
-    if(!name){
-        res.status(400).json({ message: "Name cannot be blank." })
-    }
+    // if(!name){
+    //     res.status(400).json({ message: "Name cannot be blank." })
+    // }
 
     userDb.update(id, changes).then( updatedUser => {
         res.status(200).json(updatedUser);
@@ -117,11 +117,23 @@ function validateUserId(req, res, next) {
 };
 
 function validateUser(req, res, next) {
-
+    if(!req.body){
+        res.status(400).json({ message: "missing user data" })
+    } else if (!req.body.name) {
+        res.status(400).json({ message: "missing required name field." })
+    } else {
+        next();
+    }
 };
 
 function validatePost(req, res, next) {
-
+    if(!req.body){
+        res.status(400).json({ message: "missing post data" })
+    } else if (!req.body.text){
+        res.status(400).json({ message: "missing required text field" })
+    } else {
+        next();
+    }
 };
 
 module.exports = router;

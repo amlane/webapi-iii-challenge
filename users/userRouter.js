@@ -68,7 +68,15 @@ router.get('/:id/posts', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-
+    const id = req.params.id;
+    if(!id){
+        res.status(404).json({ message: "Cannot delete a user that doesn't exist." })
+    }
+    userDb.remove(id).then( deleted => {
+        res.status(204).end();
+    }).catch( error => {
+        res.status(500).json({ error: "An error occured while trying to delete user from the database." })
+    })
 });
 
 router.put('/:id', (req, res) => {
@@ -81,8 +89,7 @@ function validateUserId(req, res, next) {
     if(req.body && req.body.id){
         next();
     } else {
-        res.status(404).json({ message: "User ID not found." })
-        next();
+        res.status(404).json({ message: "Information not found." })
     }
 };
 

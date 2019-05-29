@@ -69,17 +69,31 @@ router.get('/:id/posts', (req, res) => {
 
 router.delete('/:id', (req, res) => {
     const id = req.params.id;
-    if(!id){
-        res.status(404).json({ message: "Cannot delete a user that doesn't exist." })
-    }
+
     userDb.remove(id).then( deleted => {
-        res.status(204).end();
+        if(!deleted){
+            res.status(404).json({ message: "Cannot delete a user that doesn't exist." })
+        } else {
+            res.status(204).end();
+        }
     }).catch( error => {
         res.status(500).json({ error: "An error occured while trying to delete user from the database." })
     })
 });
 
 router.put('/:id', (req, res) => {
+    const id = req.params.id;
+    const changes = req.body;
+    const { name } = req.body;
+    if(!name){
+        res.status(400).json({ message: "Name cannot be blank." })
+    }
+
+    userDb.update(id, changes).then( updatedUser => {
+        res.status(200).json(updatedUser);
+    } ).catch(error => {
+        res.status(500).json({ error: "An error occured while trying to update user in the database." })
+    })
 
 });
 

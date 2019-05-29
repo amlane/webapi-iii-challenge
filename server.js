@@ -18,7 +18,8 @@ server.get('/', (req, res) => {
 //custom middleware
 
 function logger(req, res, next) {
-  console.log(`a request was made from ${req.method} request to ${req.url}`);
+  const time = new Date().toISOString();
+  console.log(`a request was made from ${req.method} request to ${req.url} at ${time}`);
   next();
 };
 

@@ -33,8 +33,10 @@ router.put('/:id', (req, res) => {
 //custom middleware
 
 function validateUserId(req, res, next) {
-
+    console.log(req)
 };
+
+validateUserId();
 
 function validateUser(req, res, next) {
 

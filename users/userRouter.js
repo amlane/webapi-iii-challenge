@@ -31,7 +31,11 @@ router.get('/:id', (req, res) => {
     const id = req.params.id;
 
     userDb.getUserPosts(id).then( userPosts => {
-        res.status(200).json(userPosts)
+        if(userPosts && userPosts.length){
+            res.status(200).json(userPosts)
+        } else {
+            res.status(404).json({ message: 'User ID not valid.' })
+        }
     }).catch(error => {
         res.status(500).json({ error: "Unable to find users by that ID." })
     })

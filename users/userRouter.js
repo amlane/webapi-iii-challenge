@@ -2,14 +2,12 @@ const express = require('express');
 
 const router = express.Router();
 
-const userDb = ('./userDb.js');
+const userDb = require('./userDb.js');
 
 router.post('/', (req, res) => {
-    const { name } = req.body;
-    if(!name) {
-        res.status(400).json({ message: "Name cannot be blank." })
-    }
-    userDb.insert({ name }).then( newUser => {
+    const user = req.body;
+
+    userDb.insert(user).then( newUser => {
         res.status(201).json(newUser)
     }).catch( error => {
         res.status(500).json({ error: "Unable to add user to database." })

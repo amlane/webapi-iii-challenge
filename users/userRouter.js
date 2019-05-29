@@ -16,6 +16,7 @@ router.post('/', (req, res) => {
 
 router.post('/:id/posts', (req, res) => {
     
+
 });
 
 router.get('/', (req, res) => {
@@ -27,7 +28,13 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
+    const id = req.params.id;
 
+    userDb.getUserPosts(id).then( userPosts => {
+        res.status(200).json(userPosts)
+    }).catch(error => {
+        res.status(500).json({ error: "Unable to find users by that ID." })
+    })
 });
 
 router.get('/:id/posts', (req, res) => {

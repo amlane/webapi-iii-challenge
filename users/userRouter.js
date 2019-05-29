@@ -5,15 +5,27 @@ const router = express.Router();
 const userDb = ('./userDb.js');
 
 router.post('/', (req, res) => {
-
+    const { name } = req.body;
+    if(!name) {
+        res.status(400).json({ message: "Name cannot be blank." })
+    }
+    userDb.insert({ name }).then( newUser => {
+        res.status(201).json(newUser)
+    }).catch( error => {
+        res.status(500).json({ error: "Unable to add user to database." })
+    })
 });
 
-router.post('/:id/posts', validateUserId, (req, res) => {
-
+router.post('/:id/posts', (req, res) => {
+    
 });
 
 router.get('/', (req, res) => {
-
+    userDb.get().then( users => {
+        res.status(200).json(users)
+    }).catch( error => {
+        res.status(500).json({ error: "Unable to find users." })
+    })
 });
 
 router.get('/:id', (req, res) => {
@@ -42,8 +54,6 @@ function validateUserId(req, res, next) {
         next();
     }
 };
-
-validateUserId();
 
 function validateUser(req, res, next) {
 

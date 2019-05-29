@@ -15,7 +15,7 @@ router.post('/', (req, res) => {
     })
 });
 
-router.post('/:id/posts', (req, res) => {
+router.post('/:id/posts',  (req, res) => {
     let post = req.body;
     const id = req.params.id;
     post.user_id = id;
@@ -39,21 +39,21 @@ router.get('/', (req, res) => {
     })
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', validateUserId, (req, res) => {
     const id = req.params.id;
 
     userDb.getById(id).then( user => {
-        if(user){
+        // if(user){
             res.status(200).json(user)
-        } else {
-            res.status(404).json({ message: "No user by that ID." })
-        }
+        // } else {
+        //     res.status(404).json({ message: "No user by that ID." })
+        // }
     }).catch( error => {
         res.status(500).json({ error: 'Unable to find users by that ID.' })
     })
 });
 
-router.get('/:id/posts', (req, res) => {
+router.get('/:id/posts', validateUserId, (req, res) => {
     const id = req.params.id;
 
     userDb.getUserPosts(id).then( userPosts => {
@@ -67,21 +67,21 @@ router.get('/:id/posts', (req, res) => {
     })
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validateUserId, (req, res) => {
     const id = req.params.id;
 
     userDb.remove(id).then( deleted => {
-        if(!deleted){
-            res.status(404).json({ message: "Cannot delete a user that doesn't exist." })
-        } else {
+        // if(!deleted){
+        //     res.status(404).json({ message: "Cannot delete a user that doesn't exist." })
+        // } else {
             res.status(204).end();
-        }
+        // }
     }).catch( error => {
         res.status(500).json({ error: "An error occured while trying to delete user from the database." })
     })
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', validateUserId, (req, res) => {
     const id = req.params.id;
     const changes = req.body;
     const { name } = req.body;
@@ -100,11 +100,20 @@ router.put('/:id', (req, res) => {
 //custom middleware
 
 function validateUserId(req, res, next) {
-    if(req.body && req.body.id){
-        next();
-    } else {
-        res.status(404).json({ message: "Information not found." })
-    }
+    const id = req.params.id;
+
+    userDb.getById(id)
+    .then( user => {
+        if(user){
+            req.user = user;
+            next();
+        } else {
+            res.status(404).json({ error: "Invalid user id." })
+        }
+    })
+    .catch(error => {
+        res.status(500).json({ error: "ERROR! DANGER!" })
+    })
 };
 
 function validateUser(req, res, next) {

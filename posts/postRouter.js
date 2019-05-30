@@ -27,7 +27,13 @@ router.get('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
+    const id = req.params.id;
 
+    postDb.remove(id).then( deleted => {
+        res.status(204).end();
+    }).catch( error => {
+        res.status(500).json({ error: "An error occured while deleting post from the database" })
+    })
 });
 
 router.put('/:id', (req, res) => {

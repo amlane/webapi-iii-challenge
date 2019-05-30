@@ -39,15 +39,15 @@ router.get('/', (req, res) => {
     })
 });
 
-router.get('/:id', validateUserId, (req, res) => {
+router.get('/:id', (req, res) => {
     const id = req.params.id;
 
     userDb.getById(id).then( user => {
-        // if(user){
+        if(user){
             res.status(200).json(user)
-        // } else {
-        //     res.status(404).json({ message: "No user by that ID." })
-        // }
+        } else {
+            res.status(404).json({ message: "No user by that ID." })
+        }
     }).catch( error => {
         res.status(500).json({ error: 'Unable to find users by that ID.' })
     })
@@ -84,7 +84,7 @@ router.delete('/:id', validateUserId, (req, res) => {
 router.put('/:id', validateUserId, validateUser, (req, res) => {
     const id = req.params.id;
     const changes = req.body;
-    const { name } = req.body;
+    // const { name } = req.body;
     // if(!name){
     //     res.status(400).json({ message: "Name cannot be blank." })
     // }

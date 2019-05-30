@@ -30,14 +30,28 @@ router.delete('/:id', (req, res) => {
     const id = req.params.id;
 
     postDb.remove(id).then( deleted => {
-        res.status(204).end();
+        if(deleted){
+            res.status(204).end(); 
+        } else {
+            res.status(404).json({ message: "Post doesn't exist." })
+        }
     }).catch( error => {
         res.status(500).json({ error: "An error occured while deleting post from the database" })
     })
 });
 
 router.put('/:id', (req, res) => {
-
+    const id = req.params.id;
+    const changes = req.body;
+    const { text } = req.body;
+    if(!text){
+        res.status(400).json({ error: "You must provide text in the post field." })
+    }
+    postDb.update(id, changes).then( updatedPost => {
+        res.status(200).json(updatedPost);
+    } ).catch(error => {
+        res.status(500).json({ error: "You've encountered an error trying to update the post in the database." })
+    })
 });
 
 // custom middleware

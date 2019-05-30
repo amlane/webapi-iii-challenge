@@ -12,35 +12,35 @@ router.get('/', (req, res) => {
     })
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', validatePostId, (req, res) => {
     const id = req.params.id;
 
     postDb.getById(id).then( post => {
-        if(post){
+        // if(post){
             res.status(200).json(post)
-        } else {
-            res.status(404).json({ message: "Post doesn't exist." })
-        }
+        // } else {
+        //     res.status(404).json({ message: "Post doesn't exist." })
+        // }
     }).catch( error => {
         res.status(500).json({ message: "Error trying to retrieve the users posts from the database." })
     })
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validatePostId, (req, res) => {
     const id = req.params.id;
 
     postDb.remove(id).then( deleted => {
-        if(deleted){
+        // if(deleted){
             res.status(204).end(); 
-        } else {
-            res.status(404).json({ message: "Post doesn't exist." })
-        }
+        // } else {
+        //     res.status(404).json({ message: "Post doesn't exist." })
+        // }
     }).catch( error => {
         res.status(500).json({ error: "An error occured while deleting post from the database" })
     })
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', validatePostId, (req, res) => {
     const id = req.params.id;
     const changes = req.body;
     const { text } = req.body;
@@ -59,8 +59,17 @@ router.put('/:id', (req, res) => {
 function validatePostId(req, res, next) {
     const id = req.params.id;
 
-    postDb.getById(id).then().catch(error => {
-        res.status(500)
+    postDb.getById(id)
+    .then( post => {
+        if(post){
+            req.post = post;
+            next();
+        } else {
+            res.status(404).json({ error: "This post doesn't exist, silly." })
+        }
+    })
+    .catch(error => {
+        res.status(500).json({ error: "Server error trying to validate post id." })
     })
 };
 

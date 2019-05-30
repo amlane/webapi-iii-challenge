@@ -1,6 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
-const cors = require('cors')
+const cors = require('cors');
 
 const userRouter = require('./users/userRouter.js');
 const postRouter = require('./posts/postRouter.js');
@@ -10,7 +10,7 @@ const server = express();
 server.use(express.json());
 server.use(helmet());
 server.use(logger);
-server.use(cors({ origin: 'http://localhost:3000' }))
+server.use(cors({ origin: '*' }))
 
 
 server.use('/api/users', userRouter)

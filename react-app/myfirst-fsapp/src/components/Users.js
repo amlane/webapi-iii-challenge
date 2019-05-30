@@ -8,7 +8,7 @@ class Users extends React.Component{
 
     componentDidMount(){
         axios
-        .get('http://localhost:5000/api/users')
+        .get('https://turtles-app.herokuapp.com/api/users')
         .then( res => {
             console.log(res)
             this.setState({ users: res.data })

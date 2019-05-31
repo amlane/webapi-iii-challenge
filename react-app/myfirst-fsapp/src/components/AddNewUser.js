@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 
 class AddNewUser extends React.Component{
     constructor(props){
@@ -24,7 +23,7 @@ class AddNewUser extends React.Component{
         this.setState({ name: '' })
         setTimeout(() => {
           this.props.history.push('/users')
-        }, 1000)
+        }, 500)
         
     }
 

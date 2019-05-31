@@ -40,7 +40,20 @@ class App extends React.Component{
         })    
     }
 
+      deleteUser = (e, id) => {
+        e.preventDefault();
+        axios
+        .delete(`https://turtles-app.herokuapp.com/api/users/${id}`)
+        .then(res => {
+            this.setState({ users: res.data })
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      }
+
   render(){
+    console.log("users", this.state.users)
     return (
       <div className="App">
         <h1>Blog App</h1>
@@ -58,6 +71,7 @@ class App extends React.Component{
           {...props}
           users={this.state.users}
           getUsers={this.getUsers}
+          deleteUser={this.deleteUser}
           />}
           />
         <Route exact path="/posts" component={Posts} />

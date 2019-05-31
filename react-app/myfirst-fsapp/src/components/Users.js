@@ -27,7 +27,7 @@ class Users extends React.Component{
                 <h1>Users</h1>
                 {this.state.users.map( user => {
                     return (
-                        <Link to={`/users/${user.id}/posts`}><p key={user.id}>{user.name}</p></Link>
+                        <Link to={`/users/${user.id}/posts/${user.name}`}><p key={user.id}>{user.name}</p></Link>
                     )
                 })}
             </div>

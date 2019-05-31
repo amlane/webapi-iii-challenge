@@ -19,7 +19,7 @@ function App() {
 
       <Route exact path="/users" component={Users} />
       <Route exact path="/posts" component={Posts} />
-      <Route path="/users/:id/posts" component={PostByUser} />
+      <Route path="/users/:id/posts/:name" component={PostByUser} />
     </div>
   );
 }

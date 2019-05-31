@@ -5,7 +5,8 @@ import { readSync } from 'fs';
 class PostByUser extends React.Component{
     state = {
         userPosts: [],
-        user: this.props.match.params.id
+        user: this.props.match.params.id,
+        username: this.props.match.params.name
     }
 
     componentDidMount(){
@@ -25,10 +26,12 @@ class PostByUser extends React.Component{
     render(){
         return (
             <>
-            <div>Posts By User Page</div>
+            <h1>Posts by {this.state.username}</h1>
             {this.state.userPosts.map( post => {
                 return (
+                    <>
                     <p key={post.id}>{post.text}</p>
+                    </>
                 )
             })}
             </>

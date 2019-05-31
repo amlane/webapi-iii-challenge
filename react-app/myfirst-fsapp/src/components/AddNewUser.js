@@ -31,14 +31,14 @@ class AddNewUser extends React.Component{
     render(){
         return (
             <form onSubmit={this.handleSubmit}>
-            <div>Add New User</div>
+            <h2>Add New User</h2>
             <label>Name (required):</label>
             <input 
             name="name"
             value={this.state.name}
             onChange={this.handleInput}
             />
-            <button>Submit</button>
+            <button className="submit-btn">Submit</button>
             </form>
         )
     }

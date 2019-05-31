@@ -25,7 +25,7 @@ class Users extends React.Component{
         return (
             <>
             <h1>Users</h1>
-            <Link to="/create-user">Add New User</Link>
+            <Link className="add-user-btn" to="/create-user">Add New User</Link>
             <div className="users">
                 {this.props.users.map( user => {
                     return (

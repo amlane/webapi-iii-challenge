@@ -62,10 +62,10 @@ class App extends React.Component{
     console.log('user', this.state.user)
     return (
       <div className="App">
-        <h1>Blog App</h1>
+        <h1>My Super Neato Blog App</h1>
         <nav>
         <NavLink to="/">Home</NavLink>{' '}
-        <NavLink to="/users">Users</NavLink>{' '}
+        <NavLink to="/users">Authors</NavLink>{' '}
         <NavLink to="/posts">Posts</NavLink>
         </nav>
 

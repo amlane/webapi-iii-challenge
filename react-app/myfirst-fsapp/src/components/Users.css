@@ -1,0 +1,13 @@
+.users {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.user {
+    border: 1px solid silver;
+    height: 100px;
+    width: 100px;
+    margin: 20px;
+    text-decoration: none;
+    color: white;
+}

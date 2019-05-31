@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import '../App.css';
 
@@ -12,7 +13,6 @@ class Users extends React.Component{
         axios
         .get('https://turtles-app.herokuapp.com/api/users')
         .then( res => {
-            console.log(res)
             this.setState({ users: res.data })
         })
         .catch( err => {
@@ -27,7 +27,7 @@ class Users extends React.Component{
                 <h1>Users</h1>
                 {this.state.users.map( user => {
                     return (
-                        <p>{user.name}</p>
+                        <Link to={`/users/${user.id}/posts`}><p key={user.id}>{user.name}</p></Link>
                     )
                 })}
             </div>

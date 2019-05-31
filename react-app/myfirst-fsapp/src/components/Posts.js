@@ -28,7 +28,7 @@ class Posts extends React.Component{
             <h1>Posts Component</h1>
             {this.state.posts.map( post => {
                 return (
-                    <p>{post.text}</p>
+                    <p key={post.id}>{post.text}</p>
                 )
             })}
             </div>

@@ -17,8 +17,9 @@ function App() {
       <NavLink to="/posts">Posts</NavLink>
       </nav>
 
-      <Route path="/users" component={Users} />
-      <Route path="/posts" component={Posts} />
+      <Route exact path="/users" component={Users} />
+      <Route exact path="/posts" component={Posts} />
+      <Route path="/users/:id/posts" component={PostByUser} />
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
+import '../App.css';
+
 class Users extends React.Component{
     state = {
         users: []
@@ -21,12 +23,14 @@ class Users extends React.Component{
     render(){
         return (
             <>
-            <div>Yo dawg I'm the Users Component</div>
-            {this.state.users.map( user => {
-                return (
-                    <p>{user.name}</p>
-                )
-            })}
+            <div className="users">
+                <h1>Users</h1>
+                {this.state.users.map( user => {
+                    return (
+                        <p>{user.name}</p>
+                    )
+                })}
+            </div>
             </>
         )
     }

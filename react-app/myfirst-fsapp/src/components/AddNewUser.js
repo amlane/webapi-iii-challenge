@@ -24,8 +24,8 @@ class AddNewUser extends React.Component{
         this.setState({ name: '' })
         setTimeout(() => {
           this.props.history.push('/users')
+          window.location.reload();
         }, 500)
-        
     }
 
     render(){

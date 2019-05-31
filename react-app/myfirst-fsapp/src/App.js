@@ -11,22 +11,16 @@ import AddNewUser from './components/AddNewUser';
 import './App.css';
 
 class App extends React.Component{
-  state = {
-    users: []
+  constructor(){
+    super();
+    this.state = {
+      users: [],
+      user: {}
+    }
   }
 
-  componentDidMount(){
-    axios
-        .get('https://turtles-app.herokuapp.com/api/users')
-        .then( res => {
-            this.setState({ users: res.data })
-        })
-        .catch( err => {
-            console.log("error: ", err)
-        })
-  }
-
-      getUsers = () => {
+      componentDidMount(){
+        console.log("CDM")
         axios
             .get('https://turtles-app.herokuapp.com/api/users')
             .then( res => {
@@ -38,12 +32,13 @@ class App extends React.Component{
       }
 
       addNewUser = newUser => {
+        console.log("add new user")
         axios 
         .post(`https://turtles-app.herokuapp.com/api/users/`, newUser)
         .then(res => {
             console.log(res)
             this.setState({
-                users: res.data
+                user: res.data
             })
         })
         .catch(error => {
@@ -52,11 +47,10 @@ class App extends React.Component{
     }
 
       deleteUser = (e, id) => {
-        e.preventDefault();
         axios
         .delete(`https://turtles-app.herokuapp.com/api/users/${id}`)
         .then(res => {
-            this.setState({ users: res.data })
+            this.setState({ user: res.data })
         })
         .catch(error => {
           console.log(error)
@@ -65,6 +59,7 @@ class App extends React.Component{
 
   render(){
     console.log("users", this.state.users)
+    console.log('user', this.state.user)
     return (
       <div className="App">
         <h1>Blog App</h1>
@@ -81,7 +76,7 @@ class App extends React.Component{
           <Users
           {...props}
           users={this.state.users}
-          getUsers={this.getUsers}
+       
           deleteUser={this.deleteUser}
           />}
           />

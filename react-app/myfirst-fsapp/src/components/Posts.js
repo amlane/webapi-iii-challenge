@@ -12,7 +12,7 @@ class Posts extends React.Component{
         axios 
         .get(`https://turtles-app.herokuapp.com/api/posts/`)
         .then( res => {
-            console.log("response: ", res)
+            // console.log("response: ", res)
             this.setState({ 
                 posts: res.data
             })
@@ -21,6 +21,7 @@ class Posts extends React.Component{
             console.log(error)
         })
     }
+
 
     render(){
         return(

@@ -19,6 +19,13 @@ class AddNewUser extends React.Component{
     handleSubmit = e => {
         e.preventDefault();
         console.log('clicked')
+        if(!this.state.name) return;
+        this.props.addNewUser(this.state)
+        this.setState({ name: '' })
+        setTimeout(() => {
+          this.props.history.push('/users')
+        }, 1000)
+        
     }
 
     render(){

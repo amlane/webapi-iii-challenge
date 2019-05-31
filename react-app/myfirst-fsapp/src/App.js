@@ -15,7 +15,7 @@ class App extends React.Component{
     users: []
   }
 
-      componentDidMount(){
+      getUsers = () => {
         axios
             .get('https://turtles-app.herokuapp.com/api/users')
             .then( res => {
@@ -57,11 +57,19 @@ class App extends React.Component{
           <Users
           {...props}
           users={this.state.users}
+          getUsers={this.getUsers}
           />}
-         />
+          />
         <Route exact path="/posts" component={Posts} />
         <Route path="/users/:id/posts/:name" component={PostByUser} />
-        <Route path="/create-user" component={AddNewUser} />
+        <Route 
+        path="/create-user" 
+        render={ props => 
+          <AddNewUser
+          {...props}
+          addNewUser={this.addNewUser}
+          />} 
+        />
       </div>
     );
   }

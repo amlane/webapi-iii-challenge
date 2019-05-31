@@ -15,6 +15,8 @@ class Users extends React.Component{
     }
 
     render(){
+        console.log('users', this.props.users)
+        if(!this.props.users || this.props.users.length === 1) return <h1>Loading data...</h1>;
         return (
             <>
             <h1>Users</h1>

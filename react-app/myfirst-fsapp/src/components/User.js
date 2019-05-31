@@ -9,7 +9,7 @@ function User(props){
             <p key={props.user.id}>{props.user.name}</p>
         </Link>
          <button>edit</button>
-        <button onClick={e => props.deleteUser(e, props.user.id)}>x</button>
+         <button onClick={e => props.deleteUser(e, props.user.id)}>x</button>
         </div>
     )
 }

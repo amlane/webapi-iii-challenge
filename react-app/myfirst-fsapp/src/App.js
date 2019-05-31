@@ -15,6 +15,17 @@ class App extends React.Component{
     users: []
   }
 
+  componentDidMount(){
+    axios
+        .get('https://turtles-app.herokuapp.com/api/users')
+        .then( res => {
+            this.setState({ users: res.data })
+        })
+        .catch( err => {
+            console.log("error: ", err)
+        })
+  }
+
       getUsers = () => {
         axios
             .get('https://turtles-app.herokuapp.com/api/users')
@@ -32,7 +43,7 @@ class App extends React.Component{
         .then(res => {
             console.log(res)
             this.setState({
-                user: res.data
+                users: res.data
             })
         })
         .catch(error => {

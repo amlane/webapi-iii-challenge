@@ -57,9 +57,12 @@ input {
     background: none;
     border: none;
     border-bottom: 1px solid silver;
+    color: white;
 }
 
 input:focus,
 button:focus {
     outline: none;
+    background: none;
+    color: white;
 }

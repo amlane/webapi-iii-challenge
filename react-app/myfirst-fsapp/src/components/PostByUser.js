@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { readSync } from 'fs';
 
 class PostByUser extends React.Component{
     state = {
@@ -34,6 +33,7 @@ class PostByUser extends React.Component{
                     </>
                 )
             })}
+
             </>
         )
     }
